@@ -21,7 +21,7 @@ SELECT DISTINCT P.namefirst,
 	a.g_all,
 	t.name
 FROM people as p
-INNER JOIN appearances as aGIT F
+INNER JOIN appearances as aGIT Fgit 
 USING(playerid)
 INNER JOIN teams as t
 USING (teamid)
@@ -35,10 +35,29 @@ FROM appearance
 SELECT DISTINCT name, teamid
 FROM teams
 WHERE teamid = 'SLA'
+
 -- 3. Find all players in the database who played at Vanderbilt University. Create a list showing each player’s first and last names as well as the total salary they earned in the major leagues. Sort this list in descending order by the total salary earned. Which Vanderbilt player earned the most money in the majors?
-
-
+SELECT p.namefirst, p.namelast, p.playerid, SUM(salary) as total_salary 
+FROM people as p
+INNER JOIN salaries as a
+USING (playerid)
+INNER JOIN collegeplaying as c
+USING (playerid)
+INNER JOIN schools as sc
+ON sc.schoolid = c.schoolid 
+WHERE sc.schoolid LIKE '%vand%'
+GROUP BY playerid
+ORDER BY total_salary DESC;
+ --- 15 players paid at Vanderbilt --     ---- Highest paid baseball player: David Price ($245,553,888)
+ 
+ 
 -- 4. Using the fielding table, group players into three groups based on their position: label players with position OF as "Outfield", those with position "SS", "1B", "2B", and "3B" as "Infield", and those with position "P" or "C" as "Battery". Determine the number of putouts made by each of these three groups in 2016.
+
+
+
+
+
+
 
 -- 5. Find the average number of strikeouts per game by decade since 1920. Round the numbers you report to 2 decimal places. Do the same for home runs per game. Do you see any trends?
 
