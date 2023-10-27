@@ -53,10 +53,16 @@ ORDER BY total_salary DESC;
  
 -- 4. Using the fielding table, group players into three groups based on their position: label players with position OF as "Outfield", those with position "SS", "1B", "2B", and "3B" as "Infield", and those with position "P" or "C" as "Battery". Determine the number of putouts made by each of these three groups in 2016.
 
-
-
-
-
+SELECT SUM(po) as total_po,
+	CASE 
+		WHEN pos IN ('SS','1B','2B','3B') THEN 'Infield'
+		WHEN pos IN ('P', 'C') THEN 'Battery'
+		WHEN pos IN ('OF') then 'Outfield'
+		END AS player_group
+FROM fielding AS f
+WHERE yearid = 2016
+GROUP BY  player_group
+ORDER BY total_po;
 
 
 -- 5. Find the average number of strikeouts per game by decade since 1920. Round the numbers you report to 2 decimal places. Do the same for home runs per game. Do you see any trends?
